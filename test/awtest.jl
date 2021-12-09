@@ -6,25 +6,28 @@ using Colors
 using Printf
 using CSV
 
-components = [(("H", 2), ("SO4", 1))]
+include("../src/AIOMFAC.jl")
+Tk = 293.0
+
+components = [(("H+", 2), ("SO4--", 1))]
 AIOMFAC.writeinput("input_0001.txt", Tk, components, 1.0)
 run(`./AIOMFAC Inputfiles/input_0001.txt`)
 aw, k = AIOMFAC.parseoutput("AIOMFAC_output_0001.txt")
 df2 = DataFrame(aw=aw, k=k, comp="H2SO4")
 
-components = [(("Na", 2), ("SO4", 1))]
+components = [(("Na+", 2), ("SO4--", 1))]
 AIOMFAC.writeinput("input_0001.txt", Tk, components, 1.0)
 run(`./AIOMFAC Inputfiles/input_0001.txt`)
 aw, k = AIOMFAC.parseoutput("AIOMFAC_output_0001.txt")
 df3 = DataFrame(aw=aw, k=k, comp="Na2SO4")
 
-components = [(("NH4", 2), ("SO4", 1))]
+components = [(("NH4+", 2), ("SO4--", 1))]
 AIOMFAC.writeinput("input_0001.txt", Tk, components, 1.0)
 run(`./AIOMFAC Inputfiles/input_0001.txt`)
 aw, k = AIOMFAC.parseoutput("AIOMFAC_output_0001.txt")
 df4 = DataFrame(aw=aw, k=k, comp="(NH4)2SO4")
 
-components = [(("NH4", 1), ("HSO4", 1))]
+components = [(("NH4+", 1), ("HSO4-", 1))]
 AIOMFAC.writeinput("input_0001.txt", Tk, components, 1.0)
 run(`./AIOMFAC Inputfiles/input_0001.txt`)
 aw, k = AIOMFAC.parseoutput("AIOMFAC_output_0001.txt")
