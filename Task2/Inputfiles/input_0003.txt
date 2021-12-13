@@ -1,0 +1,36 @@
+Input file for AIOMFAC-web model
+ 
+mixture components:
+----
+component no.:	01
+component name:	'Water'
+subgroup no., qty:	016, 01
+----
+component no.:	2
+component name:	'organic component'
+subgroup no., qty: 145, 1
+subgroup no., qty: 150, 1
+subgroup no., qty: 153, 1
+----
+++++
+mixture composition and temperature:
+mass fraction?	1
+mole fraction?  0	
+----
+point, Tk, cp0, ...
+1	    273.0,     1.0,    
+1	    273.0,     0.8,    
+1	    273.0,     0.6,    
+1	    273.0,     0.4,    
+1	    273.0,     0.2,    
+1	    293.0,     1.0,    
+1	    293.0,     0.8,    
+1	    293.0,     0.6,    
+1	    293.0,     0.4,    
+1	    293.0,     0.2,    
+1	    303.0,     1.0,    
+1	    303.0,     0.8,    
+1	    303.0,     0.6,    
+1	    303.0,     0.4,    
+1	    303.0,     0.2,    
+====
