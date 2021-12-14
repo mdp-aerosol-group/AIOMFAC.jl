@@ -1,6 +1,20 @@
 using DataFrames
 using CSV
+using Test
+
 include("Output.jl")
+
+c1 = Output.data("../Web Output/Predefined List/Citric_Acid.txt")
+c2 = Output.data("../Web Output/Defined Subgroups/Citric_Acid.txt")
+@test c1.T == c2.T
+@test c1.RH == c2.RH
+@test c1.η == c2.η
+@test c1.ση == c2.ση
+@test c1.flag == c2.flag
+
+
+
+### Fix
 
 # Comparing Web Output for Predefined and Defined Groups
 c1 = Output.compare("../Web Output/Predefined List/Citric_Acid.txt", "../Web Output/Defined Subgroups/Citric_Acid.txt")
