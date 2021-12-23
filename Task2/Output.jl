@@ -69,6 +69,7 @@ function Components(file)
 
     n = ("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24")
     sch = "Mixture's component # : "
+    srh = "Mixture's species, #  : "
 
     ind = 1
     count = 0 
@@ -77,6 +78,18 @@ function Components(file)
         a = n[ind]
         z = sch * a
         ind += 1
+        for find in lines
+            if z == find
+                count += 1
+            end    
+        end
+    end
+
+    inde = 1
+    for i in srh
+        a = n[inde]
+        z = srh * a
+        inde += 1
         for find in lines
             if z == find
                 count += 1
