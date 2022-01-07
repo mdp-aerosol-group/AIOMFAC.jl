@@ -6,30 +6,31 @@ using Colors
 using Printf
 using CSV
 
-include("AIOMFAC.jl")
-
+fi = 1.0:-0.2:0.2
 Tk = (273.0, 293.0, 303.0)
 
+include("AIOMFAC.jl")
+
 components = [(("COOH", 3), ("CH2", 2), ("C", 1), ("OH", 1))]
-AIOMFAC.writeinput("input_0001.txt", Tk, components, 1.0)	
+AIOMFAC.writeinput("input_0001.txt", Tk, fi, components, 1.0)	
 run(`./AIOMFAC Inputfiles/input_0001.txt`)
 aw, k = AIOMFAC.parseoutput("AIOMFAC_output_0001.txt")
 df2 = DataFrame(aw=aw, k=k, comp="Citric Acid")
 
 components = [(("CH3", 1), ("CH3CO", 1))]
-AIOMFAC.writeinput("input_0002.txt", Tk, components, 1.0)
+AIOMFAC.writeinput("input_0002.txt", Tk, fi, components, 1.0)
 run(`./AIOMFAC Inputfiles/input_0002.txt`)
 aw, k = AIOMFAC.parseoutput("AIOMFAC_output_0002.txt")
 df3 = DataFrame(aw=aw, k=k, comp="Acetone")
 
 components = [(("CH3[alc-tail]", 1), ("CH2[OH]", 1), ("OH", 1))]
-AIOMFAC.writeinput("input_0003.txt", Tk, components, 1.0)
+AIOMFAC.writeinput("input_0003.txt", Tk, fi, components, 1.0)
 run(`./AIOMFAC Inputfiles/input_0003.txt`)
 aw, k = AIOMFAC.parseoutput("AIOMFAC_output_0003.txt")
 df4 = DataFrame(aw=aw, k=k, comp="Ethanol")
 
 components = [(("ACH", 5), ("ACOH", 1))]
-AIOMFAC.writeinput("input_0004.txt", Tk, components, 1.0)
+AIOMFAC.writeinput("input_0004.txt", Tk, fi, components, 1.0)
 run(`./AIOMFAC Inputfiles/input_0004.txt`)
 aw, k = AIOMFAC.parseoutput("AIOMFAC_output_0004.txt")
 df5 = DataFrame(aw=aw, k=k, comp="Phenol")

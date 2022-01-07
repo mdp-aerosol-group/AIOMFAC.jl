@@ -105,8 +105,7 @@ const group = OrderedDict([
 ])
 
 
-function writeinput(file, Tk, components, fractions)
-	fi = 1.0:-0.2:0.2
+function writeinput(file, Tk, fi, components, fractions)
 	open("Inputfiles/"*file, "w") do f
 		write(f, header)
 		map(1:length(components)) do i

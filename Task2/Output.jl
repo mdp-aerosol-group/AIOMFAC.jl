@@ -34,10 +34,9 @@ function mparse(x)
 end
 
 
-function Viscosity(file)
+function Viscosity(file, Tk, fi)
     lines = readlines("Outputfiles/"*file)
-    fi = 1.0:-0.2:0.2
-    Tk = (273.0, 293.0, 303.0)
+    
     tem = length(Tk)
     fm = length(fi)
     total = tem*fm
@@ -57,10 +56,9 @@ function Viscosity(file)
     return phase
 end
 
-function Components(file)
+function Components(file, Tk, fi)
     lines = readlines("Outputfiles/"*file)
-    fi = 1.0:-0.2:0.2
-    Tk = (273.0, 293.0, 303.0)
+    
     tem = length(Tk)
     fm = length(fi)
     total = tem*fm
@@ -134,14 +132,20 @@ function Components(file)
     return components
 end    
 
-function dfvis(file)
-    x = Viscosity(""*file)
+function load_data(file, Tk, fi)
+    a = Viscosity(""*file, Tk, fi)
+    b = Components(""*file, Tk, fi)
+    return a,b
+end
+
+function dfvis(file, Tk, fi)
+    x = Viscosity(""*file, Tk, fi)
     y = DataFrame(Temperature_K = x.T, RH = x.RH, Viscosity = x.η, Viscosity_Unc = x.ση, Flag = x.flag)
     return y
 end
 
-function dfcom(file, component)
-    x = Components(""*file)
+function dfcom(file, Tk, fi, component)
+    x = Components(""*file, Tk, fi)
     y = DataFrame(Temperature_K = x[component].T, RH = x[component].RH, Water = x[component].w, xi = x[component].xᵢ, mi = x[component].mᵢ, a_coeff_x = x[component].γ, a_x = x[component].a, Flag = x[component].flag)
     return y
 end
