@@ -3,3 +3,5 @@
 **/AIOMFAC/FortranCode/*.smod
 AIOMFAC/FortranCode/AIOMFAC-web.out
 src/AIOMFAC
+docs/build
+docs/site
