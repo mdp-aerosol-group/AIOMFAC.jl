@@ -1,6 +1,5 @@
-using DataFrames
-using CSV
 Tk = (273.0, 293.0, 303.0)
+fi = 1.0:-0.2:0.2
 include("Output.jl")
 
 # Data Frame for Citric Acid
