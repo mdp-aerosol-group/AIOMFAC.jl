@@ -6,32 +6,34 @@ using Colors
 using Printf
 using CSV
 
+fi = 1.0:-0.2:0.2
+Tk = (273.0, 293.0, 303.0)
+
 include("../src/AIOMFAC.jl")
-Tk = 293.0
 
-components = [(("H+", 2), ("SO4--", 1))]
-AIOMFAC.writeinput("input_0001.txt", Tk, components, 1.0)
+components = [(("COOH", 3), ("CH2", 2), ("C", 1), ("OH", 1))]
+AIOMFAC.writeinput("input_0001.txt", Tk, fi, components, 1.0)	
 run(`./AIOMFAC Inputfiles/input_0001.txt`)
 aw, k = AIOMFAC.parseoutput("AIOMFAC_output_0001.txt")
-df2 = DataFrame(aw=aw, k=k, comp="H2SO4")
+df2 = DataFrame(aw=aw, k=k, comp="Citric Acid")
 
-components = [(("Na+", 2), ("SO4--", 1))]
-AIOMFAC.writeinput("input_0001.txt", Tk, components, 1.0)
-run(`./AIOMFAC Inputfiles/input_0001.txt`)
-aw, k = AIOMFAC.parseoutput("AIOMFAC_output_0001.txt")
-df3 = DataFrame(aw=aw, k=k, comp="Na2SO4")
+components = [(("CH3", 1), ("CH3CO", 1))]
+AIOMFAC.writeinput("input_0002.txt", Tk, fi, components, 1.0)
+run(`./AIOMFAC Inputfiles/input_0002.txt`)
+aw, k = AIOMFAC.parseoutput("AIOMFAC_output_0002.txt")
+df3 = DataFrame(aw=aw, k=k, comp="Acetone")
 
-components = [(("NH4+", 2), ("SO4--", 1))]
-AIOMFAC.writeinput("input_0001.txt", Tk, components, 1.0)
-run(`./AIOMFAC Inputfiles/input_0001.txt`)
-aw, k = AIOMFAC.parseoutput("AIOMFAC_output_0001.txt")
-df4 = DataFrame(aw=aw, k=k, comp="(NH4)2SO4")
+components = [(("CH3[alc-tail]", 1), ("CH2[OH]", 1), ("OH", 1))]
+AIOMFAC.writeinput("input_0003.txt", Tk, fi, components, 1.0)
+run(`./AIOMFAC Inputfiles/input_0003.txt`)
+aw, k = AIOMFAC.parseoutput("AIOMFAC_output_0003.txt")
+df4 = DataFrame(aw=aw, k=k, comp="Ethanol")
 
-components = [(("NH4+", 1), ("HSO4-", 1))]
-AIOMFAC.writeinput("input_0001.txt", Tk, components, 1.0)
-run(`./AIOMFAC Inputfiles/input_0001.txt`)
-aw, k = AIOMFAC.parseoutput("AIOMFAC_output_0001.txt")
-df5 = DataFrame(aw=aw, k=k, comp="NH4HSO4")
+components = [(("ACH", 5), ("ACOH", 1))]
+AIOMFAC.writeinput("input_0004.txt", Tk, fi, components, 1.0)
+run(`./AIOMFAC Inputfiles/input_0004.txt`)
+aw, k = AIOMFAC.parseoutput("AIOMFAC_output_0004.txt")
+df5 = DataFrame(aw=aw, k=k, comp="Phenol")
 
 df = [df2;df3;df4;df5]
 colors = ["black", "darkred", "steelblue3", "darkgoldenrod", "grey", "seagreen"]

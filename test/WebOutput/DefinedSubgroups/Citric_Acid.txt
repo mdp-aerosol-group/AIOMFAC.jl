@@ -2,7 +2,7 @@
 AIOMFAC-web, version 3.01
 ===========================================================================================================
  
-Mixture name:  'Water + organic component'
+Mixture name:  'Water + organic'
 Number of independent input components: 02
 Number of different neutral components: 02
 Number of different inorganic ions    : 00
@@ -83,7 +83,7 @@ Subgroups, TeX format : '(H$_2$O)'
  
  
 Mixture's component # : 02
-Component's name      : 'organic component'
+Component's name      : 'organic'
 Component's subgroups : '(CH2)_2(C)(COOH)_3(OH)'
 Subgroups, TeX format : '(CH$_2$)$_2$(C)(COOH)$_3$(OH)'
 -----------------------------------------------------------------------------------------------------------

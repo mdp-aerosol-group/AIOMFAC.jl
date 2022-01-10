@@ -8,9 +8,8 @@ subgroup no., qty:	016, 01
 ----
 component no.:	2
 component name:	'organic component'
-subgroup no., qty: 137, 3
-subgroup no., qty: 2, 2
-subgroup no., qty: 4, 1
+subgroup no., qty: 145, 1
+subgroup no., qty: 150, 1
 subgroup no., qty: 153, 1
 ----
 ++++
