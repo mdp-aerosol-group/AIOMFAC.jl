@@ -5,3 +5,5 @@ AIOMFAC/FortranCode/AIOMFAC-web.out
 src/AIOMFAC
 docs/build
 docs/site
+test/Inputfiles/*.*
+test/Outputfiles/*.*
