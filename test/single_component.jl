@@ -12,7 +12,7 @@ function program(array, Tk, fi)
 		file = "input_000$counter.txt"
 		components = array[counter]
 		AIOMFAC.writeinput(file, Tk, fi, components, fractions)
-		run(`./AIOMFAC Inputfiles/$file`)
+		run(`../src/AIOMFAC Inputfiles/$file`)
 		fil = file[7:10]
 		fileo = "AIOMFAC_output_$fil.txt"
 	    push!(files, fileo)
