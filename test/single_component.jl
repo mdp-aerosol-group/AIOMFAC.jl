@@ -1,24 +1,13 @@
 using Test
 
-include("Output.jl")
-include("AIOMFAC.jl")
-
-Tk = (273.0, 293.0, 303.0)
-fi = 1.0:-0.2:0.2
-fractions = 1.0
-
-Citric_Acid = [(("COOH", 3), ("CH2", 2), ("C", 1), ("OH", 1))]
-Acetone = [(("CH3", 1), ("CH3CO", 1))]
-Ethanol = [(("CH3[alc-tail]", 1), ("CH2[OH]", 1), ("OH", 1))]
-Phenol = [(("ACH", 5), ("ACOH", 1))]
-
-array = [Citric_Acid, Acetone, Ethanol, Phenol]
+include("../src/AIOMFAC.jl")
 
 # To generate output
-function program(array)
+function program(array, Tk, fi)
 	i = length(array)
 	counter = 1
 	files = []
+	
 	while counter <= i
 		file = "input_000$counter.txt"
 		components = array[counter]
@@ -29,21 +18,22 @@ function program(array)
 	    push!(files, fileo)
 		counter+=1
 	end
+	
 	return files
 end
 
 # To compare two files
-function test_output(f1, f2)
+function test_output(f1, f2, Tk, fi)
 	println("")
 	split(f1, "/") |> x -> println("Testing: "*x[end])
-	u = Output.Viscosity(f1, Tk, fi)
-	v = Output.Viscosity(f2, Tk, fi)
+	u,x = AIOMFAC.load_data(f1, Tk, fi)
+	v,y = AIOMFAC.load_data(f2, Tk, fi)
 
 	@testset "Testing Phase Ouptut" begin
 		@test u.T ≈ v.T  
 		@test u.RH ≈ v.RH
 		@test u.η ≈ v.η    
-		@test u.ση ≈ v.ση
+		@test u.ση ≈ v.ση atol = 1e-5
 		@test u.flag ≈ v.flag
 	end
 
@@ -58,22 +48,31 @@ function test_output(f1, f2)
 		@test x.flag ≈ y.flag
 	end
 
-	x = Output.Components(f1, Tk, fi)
-	y = Output.Components(f2, Tk, fi)
-	
 	@testset "Testing Component Output" begin
 		map(component_test, x, y)
 	end
 end     
 
+Tk = (273.0, 293.0, 303.0)
+fi = 1.0:-0.2:0.2
+fractions = 1.0
+
+Citric_Acid = [(("COOH", 3), ("CH2", 2), ("C", 1), ("OH", 1))]
+Acetone = [(("CH3", 1), ("CH3CO", 1))]
+Ethanol = [(("CH3[alc-tail]", 1), ("CH2[OH]", 1), ("OH", 1))]
+Phenol = [(("ACH", 5), ("ACOH", 1))]
+array = [Citric_Acid, Acetone, Ethanol, Phenol]
+
 # To compare all files generated from the web
 comp = ["Citric_Acid.txt", "Acetone.txt", "Ethanol.txt", "Phenol.txt"]
-path1 = "../Web Output/Predefined List/"
-path2 = "../Web Output/Defined Subgroups/"
-map(test_output, path1.*comp, path2.*comp)
+path1 = "../WebOutput/PredefinedList/"
+path2 = "../WebOutput/DefinedSubgroups/"
+map((x,y) -> test_output(x,y,Tk,fi), path1.*comp, path2.*comp)
 
 # Comparing web output and programmed output
 println("")
 println("Testing Local Install")
+files = program(array,Tk,fi)
+map((x,y) -> test_output(x,y,Tk,fi), path1.*comp, files)
 
-map(test_output, path1.*comp, program(array))
+:DONE

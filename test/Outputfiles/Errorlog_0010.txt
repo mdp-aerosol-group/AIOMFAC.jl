@@ -15,7 +15,7 @@
  MESSAGE from AIOMFAC: number of components:            3
  
  MESSAGE from AIOMFAC: composition points read.
- MESSAGE from AIOMFAC: number of points:           15
+ MESSAGE from AIOMFAC: number of points:            6
  
 MESSAGE from AIOMFAC: input file read, starting AIOMFAC mixture definitions and initialization... 
  
@@ -56,35 +56,12 @@ MESSAGE from AIOMFAC: mixture defined, calculating composition points...
  
  
  =======================================================
- AIOMFAC WARNING 10: Temperature range related.
- At least one data point has a set temperature outside of
- the recommended range for model calculations of 
- electrolyte-containing mixtures. This may be intended, 
- but caution is advised as AIOMFAC is not designed to  
- perform well at this temperature.
- Data point no.:            3
- =======================================================
- 
- 
- =======================================================
- AIOMFAC WARNING 10: Temperature range related.
- At least one data point has a set temperature outside of
- the recommended range for model calculations of 
- electrolyte-containing mixtures. This may be intended, 
- but caution is advised as AIOMFAC is not designed to  
- perform well at this temperature.
- Data point no.:            4
- =======================================================
- 
- 
- =======================================================
- AIOMFAC WARNING 10: Temperature range related.
- At least one data point has a set temperature outside of
- the recommended range for model calculations of 
- electrolyte-containing mixtures. This may be intended, 
- but caution is advised as AIOMFAC is not designed to  
- perform well at this temperature.
- Data point no.:            5
+ AIOMFAC ERROR 6: Numerical issue.
+ A numerical issue occurred during computation of the
+ data points flagged in the output tables.
+ This error was possibly caused due to input of very
+ high electrolyte concentrations.
+ Composition point no.:            3
  =======================================================
  
  
@@ -94,17 +71,7 @@ MESSAGE from AIOMFAC: mixture defined, calculating composition points...
  data points flagged in the output tables.
  This error was possibly caused due to input of very
  high electrolyte concentrations.
- Composition point no.:            6
- =======================================================
- 
- 
- =======================================================
- AIOMFAC ERROR 6: Numerical issue.
- A numerical issue occurred during computation of the
- data points flagged in the output tables.
- This error was possibly caused due to input of very
- high electrolyte concentrations.
- Composition point no.:           11
+ Composition point no.:            5
  =======================================================
  
 ................................................................................

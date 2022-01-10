@@ -5,33 +5,33 @@ export writeinput, parseoutput
 using FileIO
 using DataStructures
 using DataFrames
-using CSV
+using Printf
 
 struct properties
-    T
-    RH
-    η
-    ση
-    flag
+	T
+	RH
+	η
+	ση
+	flag
 end
 
 struct component
-    name
-    subgroups 
-    subgroups_tex
-    T
-    RH
-    w
-    xᵢ
-    mᵢ
-    γ
-    a
-    flag   
+	name
+	subgroups 
+	subgroups_tex
+	T
+	RH
+	w
+	xᵢ
+	mᵢ
+	γ
+	a
+	flag   
 end 
 
 const header = """
 Input file for AIOMFAC-web model
- 
+
 mixture components:
 ----
 component no.:	01
@@ -48,85 +48,85 @@ mole fraction?  0
 """
 
 const group = OrderedDict([
-	("CH3", 1),
-	("CH2", 2),
-	("CH", 3),
-	("C", 4),
-	("CH2=CH", 5),
-	("CH=CH", 6),
-	("CH2=C", 7),
-	("CH=C", 8),
-	("C=C", 70),
-	("ACH", 9),
-	("AC", 10),
-	("OH", 153),
-	("ACOH", 17),
-	("CH3CO", 18),
-	("CH2CO", 19),
-	("CHO[aldehyde]", 20),
-	("CH3COO", 21),
-	("CH2COO", 22),
-	("CH3O", 24),
-	("CH2O", 25),
-	("CHO[ether]", 26),
-	("THF[CH20]", 27),
-	("COOH", 137),
-	("HCOOH", 43),
-	("CH3[alc]", 141),
-	("CH2[alc]", 142),
-	("CH[alc]", 143),
-	("C[alc]", 144),
-	("CH3[alc-tail]", 145),
-	("CH2[alc-tail]", 146),
-	("CH[alc-tail]", 147),
-	("C[alc-tail]", 148),
-	("CH3[OH]", 149),
-	("CH2[OH]", 150),
-	("CH[OH]", 151),
-	("C[OH]", 152),
-	("CH2OCH2[oxyethylene]", 154),
-	("CH2ONO2", 155),
-	("CHONO2", 156),
-	("CONO2", 157),
-	("CH2OOH[perox]", 158),
-	("CHOOH[perox]", 159),
-	("COOH[perox]", 160),
-	("C(=O)OOH[perox]", 161),
-	("CH3OOCH3[perox]", 162),
-	("CH3OOCH2[perox]", 163),
-	("CH3OOCH[perox]", 164),
-	("CH3OOC[perox]", 165),
-	("CH2OOCH2[perox]", 166),
-	("CH2OOCH[perox]", 167),
-	("CH2OOC[perox]", 168),
-	("CHOOCH[perox]", 169),
-	("CHOOC[perox]", 170),
-	("COOC[perox]", 171),
-	("C(=O)OONO2[perox]", 172),
-	("CO2[aq]", 173),
-	("H+", 205),
-	("Li+", 201),
-	("Na+", 202), 
-	("K+", 203),
-	("NH4+", 204), 
-	("Mg++", 223),
-	("Ca++", 221),
-	("Cl-", 242),
-	("Br-", 243),
-	("I-", 244), 
-	("NO3-", 245), 
-	("IO3-", 246),
-	("OH-", 247),
-	("HSO4-", 248),
-	("CH3SO3-", 249),
-	("HCO3-", 250),
-	("HMalo-", 251),
-	("HGlut-", 252), 
-	("SO4--", 261),
-	("CO3--", 262),
-	("Malo--", 263),
-	("Glut--", 264)
-])
+						   ("CH3", 1),
+						   ("CH2", 2),
+						   ("CH", 3),
+						   ("C", 4),
+						   ("CH2=CH", 5),
+						   ("CH=CH", 6),
+						   ("CH2=C", 7),
+						   ("CH=C", 8),
+						   ("C=C", 70),
+						   ("ACH", 9),
+						   ("AC", 10),
+						   ("OH", 153),
+						   ("ACOH", 17),
+						   ("CH3CO", 18),
+						   ("CH2CO", 19),
+						   ("CHO[aldehyde]", 20),
+						   ("CH3COO", 21),
+						   ("CH2COO", 22),
+						   ("CH3O", 24),
+						   ("CH2O", 25),
+						   ("CHO[ether]", 26),
+						   ("THF[CH20]", 27),
+						   ("COOH", 137),
+						   ("HCOOH", 43),
+						   ("CH3[alc]", 141),
+						   ("CH2[alc]", 142),
+						   ("CH[alc]", 143),
+						   ("C[alc]", 144),
+						   ("CH3[alc-tail]", 145),
+						   ("CH2[alc-tail]", 146),
+						   ("CH[alc-tail]", 147),
+						   ("C[alc-tail]", 148),
+						   ("CH3[OH]", 149),
+						   ("CH2[OH]", 150),
+						   ("CH[OH]", 151),
+						   ("C[OH]", 152),
+						   ("CH2OCH2[oxyethylene]", 154),
+						   ("CH2ONO2", 155),
+						   ("CHONO2", 156),
+						   ("CONO2", 157),
+						   ("CH2OOH[perox]", 158),
+						   ("CHOOH[perox]", 159),
+						   ("COOH[perox]", 160),
+						   ("C(=O)OOH[perox]", 161),
+						   ("CH3OOCH3[perox]", 162),
+						   ("CH3OOCH2[perox]", 163),
+						   ("CH3OOCH[perox]", 164),
+						   ("CH3OOC[perox]", 165),
+						   ("CH2OOCH2[perox]", 166),
+						   ("CH2OOCH[perox]", 167),
+						   ("CH2OOC[perox]", 168),
+						   ("CHOOCH[perox]", 169),
+						   ("CHOOC[perox]", 170),
+						   ("COOC[perox]", 171),
+						   ("C(=O)OONO2[perox]", 172),
+						   ("CO2[aq]", 173),
+						   ("H+", 205),
+						   ("Li+", 201),
+						   ("Na+", 202), 
+						   ("K+", 203),
+						   ("NH4+", 204), 
+						   ("Mg++", 223),
+						   ("Ca++", 221),
+						   ("Cl-", 242),
+						   ("Br-", 243),
+						   ("I-", 244), 
+						   ("NO3-", 245), 
+						   ("IO3-", 246),
+						   ("OH-", 247),
+						   ("HSO4-", 248),
+						   ("CH3SO3-", 249),
+						   ("HCO3-", 250),
+						   ("HMalo-", 251),
+						   ("HGlut-", 252), 
+						   ("SO4--", 261),
+						   ("CO3--", 262),
+						   ("Malo--", 263),
+						   ("Glut--", 264)
+						  ])
 
 
 function writeinput(file, Tk, fi, components, fractions)
@@ -166,132 +166,132 @@ function mparse(x)
 	end
 end
 
-function parseoutput(file)
-	lines = readlines("Outputfiles/"*file) 
-	out = mapfoldl(hcat, lines[67:81]) do x
+function load_data(file, Tk, fi)
+	lines = readlines("Outputfiles/"*file)
+	lx = deepcopy(lines)
+
+	tem = length(Tk)
+	fm = length(fi)
+	total = tem*fm
+	start =  42
+	last = start+total-1
+
+	Vis = mapfoldl(hcat, lines[start:last]) do x
 		map(mparse, split(x))
+	end   
+
+	Temp = Vis[2,:]
+	RH = Vis[3,:]
+	Viscosity = Vis[4,:]
+	ViscosityUnc = Vis[5,:]
+	Flag = Vis[6,:]
+	phase = properties(Temp, RH, Viscosity, ViscosityUnc, Flag) 
+
+	# parse components
+	readlines("Outputfiles/"*file)
+	
+	tem = length(Tk)
+	fm = length(fi)
+	total = tem*fm
+	start =  42
+	last = start+total-1
+
+	n = map(x -> @sprintf("%02i", x), Tuple(1:24))
+	sch = "Mixture's component # : "
+	srh = "Mixture's species, #  : "
+
+	ind = 1
+	count = 0 
+
+	for i in sch
+		a = n[ind]
+		z = sch * a
+		ind += 1
+		for find in lines
+			if z == find
+				count += 1
+			end    
+		end
 	end
-	aw = out[3,:]./100.0
-	w = out[4,:]
-	Gm = @. 1.0/(1.0 - w)
-	k = (@. (1.0/aw - 1.0) * (Gm - 1.0))
-	return aw, k 
-end
 
-function Viscosity(file, Tk, fi)
-    lines = readlines("Outputfiles/"*file)
-    
-    tem = length(Tk)
-    fm = length(fi)
-    total = tem*fm
-    start =  42
-    last = start+total-1
-    
-    Vis = mapfoldl(hcat, lines[start:last]) do x
-        map(mparse, split(x))
-    end   
-    
-    Temp = Vis[2,:]
-    RH = Vis[3,:]
-    Viscosity = Vis[4,:]
-    ViscosityUnc = Vis[5,:]
-    Flag = Vis[6,:]
-    phase = properties(Temp, RH, Viscosity, ViscosityUnc, Flag) 
-    return phase
-end
+	inde = 1
+	for i in srh
+		a = n[inde]
+		z = srh * a
+		inde += 1
+		for find in lines
+			if z == find
+				count += 1
+			end    
+		end
+	end
 
-function Components(file, Tk, fi)
-    lines = readlines("Outputfiles/"*file)
-    
-    tem = length(Tk)
-    fm = length(fi)
-    total = tem*fm
-    start =  42
-    last = start+total-1
+	counter = 1
+	starti = last+11
+	lasti = starti+total-1
+	components = []
 
-    n = ("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24")
-    sch = "Mixture's component # : "
-    srh = "Mixture's species, #  : "
+	while counter <= count
+		nam = lines[starti-6]
+		name = nam[26:end-1]
 
-    ind = 1
-    count = 0 
+		sub = lines[starti-5]
+		subgroups = sub[26:end-1]
 
-    for i in sch
-        a = n[ind]
-        z = sch * a
-        ind += 1
-        for find in lines
-            if z == find
-                count += 1
-            end    
-        end
-    end
+		tex = lines[starti-4]
+		subgroups_tex = tex[26:end-1]
 
-    inde = 1
-    for i in srh
-        a = n[inde]
-        z = srh * a
-        inde += 1
-        for find in lines
-            if z == find
-                count += 1
-            end    
-        end
-    end
+		Com = mapfoldl(hcat, lines[starti:lasti]) do x
+			map(mparse, split(x))
+		end
 
-    counter = 1
-    starti = last+11
-    lasti = starti+total-1
-    components = []
+		T = Com[2,:]
+		RH = Com[3,:]
+		w = Com[4,:]
+		xᵢ = Com[5,:]
+		mᵢ = Com[6,:]
+		γ = Com[7,:]
+		a = Com[8,:]
+		flag = Com[9,:]
 
-    while counter <= count
-        nam = lines[starti-6]
-        name = nam[26:end-1]
-    
-        sub = lines[starti-5]
-        subgroups = sub[26:end-1]
+		comp = component(name, subgroups, subgroups_tex, T, RH, w, xᵢ, mᵢ, γ, a, flag) 
+		starti = lasti + 11
+		lasti = starti+total-1
+		counter += 1
+		push!(components, comp)
+	end
 
-        tex = lines[starti-4]
-        subgroups_tex = tex[26:end-1]
-    
-        Com = mapfoldl(hcat, lines[starti:lasti]) do x
-            map(mparse, split(x))
-        end
-
-        T = Com[2,:]
-        RH = Com[3,:]
-        w = Com[4,:]
-        xᵢ = Com[5,:]
-        mᵢ = Com[6,:]
-        γ = Com[7,:]
-        a = Com[8,:]
-        flag = Com[9,:]
-
-        comp = component(name, subgroups, subgroups_tex, T, RH, w, xᵢ, mᵢ, γ, a, flag) 
-        starti = lasti + 11
-        lasti = starti+total-1
-        counter += 1
-        push!(components, comp)
-    end
-    return components
+	return phase, components
 end    
 
-function load_data(file, Tk, fi)
-    a = Viscosity(""*file, Tk, fi)
-    b = Components(""*file, Tk, fi)
-    return a,b
-end
 
 function dfvis(file, Tk, fi)
-    x = Viscosity(""*file, Tk, fi)
-    y = DataFrame(Temperature_K = x.T, RH = x.RH, Viscosity = x.η, Viscosity_Unc = x.ση, Flag = x.flag)
-    return y
+	x = Viscosity(""*file, Tk, fi)
+	y = DataFrame(
+				  Temperature_K = x.T, 
+				  RH = x.RH, 
+				  Viscosity = x.η, 
+				  Viscosity_Unc = x.ση, 
+				  Flag = x.flag
+				  )
+	
+	return y
 end
 
 function dfcom(file, Tk, fi, component)
-    x = Components(""*file, Tk, fi)
-    y = DataFrame(Temperature_K = x[component].T, RH = x[component].RH, Water = x[component].w, xi = x[component].xᵢ, mi = x[component].mᵢ, a_coeff_x = x[component].γ, a_x = x[component].a, Flag = x[component].flag)
-    return y
+	x = Components(""*file, Tk, fi)
+	y = DataFrame(
+				  Temperature_K = x[component].T, 
+				  RH = x[component].RH, 
+				  Water = x[component].w, 
+				  xi = x[component].xᵢ, 
+				  mi = x[component].mᵢ, 
+				  a_coeff_x = x[component].γ, 
+				  a_x = x[component].a, 
+				  Flag = x[component].flag
+				  )
+	
+	return y
 end
 
 end
