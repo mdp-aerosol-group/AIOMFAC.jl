@@ -1,12 +1,23 @@
 using Test
 include("../src/AIOMFAC.jl")
 
-function program(file, Tk, fi)
-	AIOMFAC.writeinput(file, Tk, fi, components, fractions)
-	run(`../src/AIOMFAC Inputfiles/$file`)
-	fil = file[7:10]
-	fileo = "AIOMFAC_output_$fil.txt"
-	return fileo
+function program(array, Tk, fi)
+	i = length(array)
+	counter = 1
+	files = []
+	
+	while counter <= i
+		file = "input_000$counter.txt"
+		components = array[counter]
+		AIOMFAC.writeinput(file, Tk, fi, components, fractions)
+		run(`../src/AIOMFAC Inputfiles/$file`)
+		fil = file[7:10]
+		fileo = "AIOMFAC_output_$fil.txt"
+	    push!(files, fileo)
+		counter+=1
+	end
+	
+	return files
 end
 
 # To compare two files
@@ -44,8 +55,14 @@ Tk = (273.0, 293.0, 303.0)
 fi = 1.0:-0.2:0.2
 fractions = [0.5, 0.5]
 
-components = [(("H+", 2), ("SO4--", 1)), (("Na+", 1), ("NO3-", 1))]
+comp = ["H2SO4_NaNO3.txt"]
+path1 = "../WebOutput/PredefinedList/"
+#path2 = "../WebOutput/DefinedSubgroups/"
+#map((x,y) -> test_output(x,y,Tk,fi), path1.*comp, path2.*comp)
 
-f1 = program("input_0005.txt", Tk, fi)
+array = [[(("H+", 2), ("SO4--", 1)), (("Na+", 1), ("NO3-", 1))]]
+files = program(array, Tk, fi)
 
-test_output(f1, "../WebOutput/DefinedSubgroups/H2SO4_NaNO3.txt", Tk, fi)
+
+map((x,y) -> test_output(x,y,Tk,fi), path2.*comp, files)
+
