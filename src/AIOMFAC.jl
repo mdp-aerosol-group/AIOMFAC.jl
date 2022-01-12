@@ -146,9 +146,10 @@ function writeinput(file, Tk, fi, components, fractions)
 		write(f, "point, Tk, cp0, ...\n")
 		for z in Tk
 			map(fi) do x
-				write(f, "1	    $z,     ")
+				write(f, "1	    $z")
 				map(fractions) do y
-					write(f, "$(x*y/sum(fractions)),    ")
+					s = @sprintf(",%0.1e", x*y/sum(fractions))
+					write(f, s)
 				end
 				write(f,"\n")
 			end	
@@ -166,7 +167,7 @@ function mparse(x)
 	end
 end
 
-function load_data(file, Tk, fi)
+function load_data(file, Tk, fi; c = 0)
 	lines = readlines("Outputfiles/"*file)
 	lx = deepcopy(lines)
 
@@ -174,7 +175,7 @@ function load_data(file, Tk, fi)
 	fm = length(fi)
 	total = tem*fm
 	start =  42
-	last = start+total-1
+	last = start+total-1-c
 
 	Vis = mapfoldl(hcat, lines[start:last]) do x
 		map(mparse, split(x))
@@ -194,7 +195,7 @@ function load_data(file, Tk, fi)
 	fm = length(fi)
 	total = tem*fm
 	start =  42
-	last = start+total-1
+	last = start+total-1-c
 
 	n = map(x -> @sprintf("%02i", x), Tuple(1:24))
 	sch = "Mixture's component # : "
@@ -228,7 +229,7 @@ function load_data(file, Tk, fi)
 
 	counter = 1
 	starti = last+11
-	lasti = starti+total-1
+	lasti = starti+total-1-c
 	components = []
 
 	while counter <= count
@@ -256,7 +257,7 @@ function load_data(file, Tk, fi)
 
 		comp = component(name, subgroups, subgroups_tex, T, RH, w, xᵢ, mᵢ, γ, a, flag) 
 		starti = lasti + 11
-		lasti = starti+total-1
+		lasti = starti+total-1-c
 		counter += 1
 		push!(components, comp)
 	end
