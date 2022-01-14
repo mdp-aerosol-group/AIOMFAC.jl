@@ -3,11 +3,14 @@ include("../src/AIOMFAC.jl")
 
 function program(array, Tk, fi)
 	i = length(array)
-	counter = 1
+    j = Tuple(1:i)
+	list = map(x -> @sprintf("%04i", x), j)
 	files = []
-	
+	counter = 1
+
 	while counter <= i
-		file = "input_000$counter.txt"
+        k = list[counter]
+		file = "input_$k.txt"
 		components = array[counter]
 		AIOMFAC.writeinput(file, Tk, fi, components, fractions)
 		run(`../src/AIOMFAC Inputfiles/$file`)
