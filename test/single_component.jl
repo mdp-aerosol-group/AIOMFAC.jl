@@ -5,11 +5,14 @@ include("../src/AIOMFAC.jl")
 # To generate output
 function program(array, Tk, fi)
 	i = length(array)
-	counter = 1
+    j = Tuple(1:i)
+	list = map(x -> @sprintf("%04i", x), j)
 	files = []
-	
+	counter = 1
+
 	while counter <= i
-		file = "input_000$counter.txt"
+        k = list[counter]
+		file = "input_$k.txt"
 		components = array[counter]
 		AIOMFAC.writeinput(file, Tk, fi, components, fractions)
 		run(`../src/AIOMFAC Inputfiles/$file`)
@@ -57,7 +60,7 @@ Tk = (273.0, 293.0, 303.0)
 fi = 1.0:-0.2:0.2
 fractions = 1.0
 
-Citric_Acid = [(("COOH", 3), ("CH2", 2), ("C", 1), ("OH", 1))]
+Citric_Acid = [(("COOH", 3), ("CH2", 2), ("C[alc]", 1), ("OH", 1))]
 Acetone = [(("CH3", 1), ("CH3CO", 1))]
 Ethanol = [(("CH3[alc-tail]", 1), ("CH2[OH]", 1), ("OH", 1))]
 Phenol = [(("ACH", 5), ("ACOH", 1))]
